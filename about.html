@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Vega Courier — About</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: #0e0e0e; color: #f0ede6; min-height: 100vh; }
+  nav { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 2.5rem; border-bottom: 0.5px solid #2a2a2a; }
+  .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 3px; text-decoration: none; color: #f0ede6; }
+  .nav-logo span { color: #c9a84c; }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a { font-size: 13px; color: #666; text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: #c9a84c; }
+
+  .page-hero { max-width: 860px; margin: 0 auto; padding: 4rem 2rem 3rem; text-align: center; }
+  .page-tag { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 3px; color: #c9a84c; text-transform: uppercase; margin-bottom: 1rem; }
+  .page-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(42px, 7vw, 72px); letter-spacing: 3px; line-height: 0.95; margin-bottom: 1rem; }
+  .page-title span { color: #c9a84c; }
+  .page-sub { font-size: 14px; color: #777; max-width: 480px; margin: 0 auto; line-height: 1.7; font-weight: 300; }
+
+  .content { max-width: 900px; margin: 0 auto; padding: 0 2rem 4rem; }
+
+  /* STORY */
+  .story { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; margin-bottom: 4rem; }
+  .story-text h2 { font-family: 'Bebas Neue', sans-serif; font-size: 32px; letter-spacing: 2px; margin-bottom: 1rem; }
+  .story-text p { font-size: 14px; color: #888; line-height: 1.9; font-weight: 300; margin-bottom: 1rem; }
+  .story-aside { display: flex; flex-direction: column; gap: 12px; }
+  .aside-card { background: #161616; border: 0.5px solid #2a2a2a; border-radius: 10px; padding: 1.25rem; }
+  .aside-num { font-family: 'Bebas Neue', sans-serif; font-size: 36px; letter-spacing: 2px; color: #c9a84c; }
+  .aside-lbl { font-size: 12px; color: #555; margin-top: 2px; }
+
+  /* VALUES */
+  .section-label { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 3px; color: #555; text-transform: uppercase; margin-bottom: 1.5rem; }
+  .values-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 4rem; }
+  .val-card { background: #161616; border: 0.5px solid #2a2a2a; border-radius: 12px; padding: 1.5rem; }
+  .val-title { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 1px; color: #c9a84c; margin-bottom: 0.5rem; }
+  .val-desc { font-size: 13px; color: #666; line-height: 1.7; font-weight: 300; }
+
+  /* TIMELINE */
+  .timeline-section { margin-bottom: 4rem; }
+  .tl { border-left: 1px solid #2a2a2a; padding-left: 2rem; margin-left: 6px; }
+  .tl-item { position: relative; padding-bottom: 2rem; }
+  .tl-item:last-child { padding-bottom: 0; }
+  .tl-dot { width: 10px; height: 10px; border-radius: 50%; background: #c9a84c; position: absolute; left: -2.6rem; top: 5px; }
+  .tl-year { font-family: 'Space Mono', monospace; font-size: 10px; color: #c9a84c; letter-spacing: 2px; margin-bottom: 4px; }
+  .tl-event { font-size: 15px; font-weight: 500; margin-bottom: 4px; }
+  .tl-detail { font-size: 13px; color: #666; line-height: 1.6; font-weight: 300; }
+
+  /* CTA */
+  .cta-card { background: #161616; border: 0.5px solid #2a2a2a; border-radius: 12px; padding: 2.5rem; display: flex; justify-content: space-between; align-items: center; gap: 2rem; flex-wrap: wrap; }
+  .cta-text h3 { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 2px; margin-bottom: 0.5rem; }
+  .cta-text p { font-size: 13px; color: #666; }
+  .cta-btn { background: #c9a84c; color: #0e0e0e; border: none; border-radius: 8px; font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 2px; padding: 12px 28px; cursor: pointer; text-decoration: none; white-space: nowrap; }
+  .cta-btn:hover { background: #d4b055; }
+
+  footer { text-align: center; padding: 2rem; border-top: 0.5px solid #1a1a1a; font-size: 11px; color: #333; font-family: 'Space Mono', monospace; }
+
+  @media (max-width: 700px) {
+    nav { padding: 1rem 1.25rem; }
+    .story { grid-template-columns: 1fr; gap: 2rem; }
+    .values-grid { grid-template-columns: 1fr; }
+    .cta-card { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">VEGA<span>.</span></a>
+  <div class="nav-links">
+    <a href="services.html">Services</a>
+    <a href="about.html" class="active">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="page-tag">Our story</div>
+  <div class="page-title">FREIGHT DONE <span>DIFFERENTLY.</span></div>
+  <p class="page-sub">We're not a logistics giant. We're a focused operation that does one route exceptionally well.</p>
+</div>
+
+<div class="content">
+
+  <!-- STORY -->
+  <div class="story">
+    <div class="story-text">
+      <h2>WHY VEGA EXISTS</h2>
+      <p>Most freight companies offer everything to everyone. The result is a system built for volume, not for care. Shipments get lost in the noise. Clients chase updates. Nobody takes ownership.</p>
+      <p>Vega was built around a different idea — specialize in one corridor, know it completely, and give every client the kind of attention that only a focused operation can provide.</p>
+      <p>We move cargo from Dubai to Europe by sea. That's it. And we do it better than anyone who's trying to do everything at once.</p>
+    </div>
+    <div class="story-aside">
+      <div class="aside-card">
+        <div class="aside-num">2019</div>
+        <div class="aside-lbl">Year founded, Dubai</div>
+      </div>
+      <div class="aside-card">
+        <div class="aside-num">340+</div>
+        <div class="aside-lbl">Shipments completed</div>
+      </div>
+      <div class="aside-card">
+        <div class="aside-num">7</div>
+        <div class="aside-lbl">Countries served across Europe</div>
+      </div>
+      <div class="aside-card">
+        <div class="aside-num">0</div>
+        <div class="aside-lbl">Lost containers. Ever.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VALUES -->
+  <div class="section-label">What drives us</div>
+  <div class="values-grid">
+    <div class="val-card">
+      <div class="val-title">TRANSPARENCY</div>
+      <p class="val-desc">Every client gets a tracking code. Every move is logged. You never have to chase us for an update — the information is already there waiting for you.</p>
+    </div>
+    <div class="val-card">
+      <div class="val-title">ACCOUNTABILITY</div>
+      <p class="val-desc">When something changes — weather, customs delays, port congestion — we tell you immediately. No silence, no excuses.</p>
+    </div>
+    <div class="val-card">
+      <div class="val-title">SPECIALIZATION</div>
+      <p class="val-desc">The Dubai–Europe sea route is all we do. We know every port, every customs requirement, every seasonal delay. That knowledge is what you're paying for.</p>
+    </div>
+    <div class="val-card">
+      <div class="val-title">DIRECTNESS</div>
+      <p class="val-desc">No middlemen, no call centres. You deal with the same person from quote to delivery. Someone who knows your shipment by name.</p>
+    </div>
+  </div>
+
+  <!-- TIMELINE -->
+  <div class="timeline-section">
+    <div class="section-label">How we got here</div>
+    <div class="tl">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2019</div>
+        <div class="tl-event">Founded in Dubai</div>
+        <p class="tl-detail">Started with a single FCL container and a handshake agreement with a freight partner in Trieste. First shipment delivered on time.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2021</div>
+        <div class="tl-event">Expanded to five European destinations</div>
+        <p class="tl-detail">Added Rotterdam, Munich, Zurich, Prague and Budapest to the network. Built relationships with customs agents in each city.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2023</div>
+        <div class="tl-event">Launched live shipment tracking</div>
+        <p class="tl-detail">Built our own tracking system so clients could follow their cargo at every checkpoint — no more email requests for status updates.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2026</div>
+        <div class="tl-event">Operating at full capacity</div>
+        <p class="tl-detail">Regular monthly departures from Jebel Ali. A client list built entirely on referrals. Still doing one route, still doing it properly.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-card">
+    <div class="cta-text">
+      <h3>WANT TO WORK WITH US?</h3>
+      <p>Tell us about your shipment and we'll get back to you within 24 hours.</p>
+    </div>
+    <a class="cta-btn" href="contact.html">GET IN TOUCH</a>
+  </div>
+
+</div>
+
+<footer>© 2026 VEGA COURIER &nbsp;·&nbsp; Dubai to Europe, by sea.</footer>
+</body>
+</html>
