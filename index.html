@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Vega Courier — Track Your Shipment</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: #0e0e0e; color: #f0ede6; min-height: 100vh; }
+  nav { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 2.5rem; border-bottom: 0.5px solid #2a2a2a; }
+  .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 3px; }
+  .nav-logo span { color: #c9a84c; }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a { font-size: 13px; color: #666; text-decoration: none; }
+  .hero { padding: 4rem 2rem 2.5rem; max-width: 860px; margin: 0 auto; text-align: center; }
+  .hero-tag { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 3px; color: #c9a84c; text-transform: uppercase; margin-bottom: 1rem; }
+  .hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(52px, 9vw, 90px); letter-spacing: 3px; line-height: 0.95; margin-bottom: 1rem; }
+  .hero-title span { color: #c9a84c; }
+  .hero-sub { font-size: 14px; color: #777; max-width: 420px; margin: 0 auto 2.5rem; line-height: 1.7; font-weight: 300; }
+  .track-card { background: #161616; border: 0.5px solid #2a2a2a; border-radius: 12px; padding: 1.75rem; max-width: 560px; margin: 0 auto; }
+  .track-label { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 2px; color: #555; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .track-row { display: flex; gap: 8px; margin-bottom: 0.5rem; }
+  .track-input { flex: 1; height: 50px; background: #0e0e0e; border: 1px solid #333; border-radius: 8px; color: #f0ede6; font-family: 'Space Mono', monospace; font-size: 14px; padding: 0 1rem; letter-spacing: 2px; }
+  .track-input::placeholder { color: #3a3a3a; }
+  .track-input:focus { outline: none; border-color: #c9a84c; }
+  .track-btn { height: 50px; padding: 0 1.5rem; background: #c9a84c; color: #0e0e0e; border: none; border-radius: 8px; font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 2px; cursor: pointer; }
+  .track-btn:hover { background: #d4b055; }
+  .result-wrap { margin-top: 1.25rem; display: none; border-top: 0.5px solid #2a2a2a; padding-top: 1.25rem; }
+  .result-wrap.show { display: block; }
+  .r-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem; }
+  .r-code { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 3px; }
+  .r-badge { font-family: 'Space Mono', monospace; font-size: 10px; padding: 5px 10px; border-radius: 20px; background: #1a2e1a; color: #5dca84; }
+  .r-badge.pending { background: #2e2a1a; color: #c9a84c; }
+  .route-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 1.25rem; }
+  .r-city { font-weight: 500; font-size: 13px; }
+  .r-line { flex: 1; height: 1px; background: #2a2a2a; position: relative; }
+  .r-dot { width: 8px; height: 8px; border-radius: 50%; background: #c9a84c; position: absolute; top: -3.5px; }
+  .timeline { border-left: 1px solid #2a2a2a; padding-left: 1.25rem; margin-left: 4px; }
+  .t-item { position: relative; padding-bottom: 1rem; }
+  .t-item:last-child { padding-bottom: 0; }
+  .t-dot { width: 9px; height: 9px; border-radius: 50%; position: absolute; left: -1.7rem; top: 4px; }
+  .t-dot.done { background: #c9a84c; }
+  .t-dot.active { background: #5dca84; }
+  .t-dot.pending { background: #2a2a2a; border: 1px solid #444; }
+  .t-status { font-size: 13px; font-weight: 500; margin-bottom: 2px; }
+  .t-status.muted { color: #555; font-weight: 400; }
+  .t-loc { font-size: 12px; color: #666; }
+  .t-date { font-size: 11px; font-family: 'Space Mono', monospace; color: #555; margin-top: 2px; }
+  .info-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 1.25rem; padding-top: 1.25rem; border-top: 0.5px solid #2a2a2a; }
+  .lbl { font-size: 10px; font-family: 'Space Mono', monospace; letter-spacing: 1px; color: #555; text-transform: uppercase; margin-bottom: 3px; }
+  .val { font-size: 13px; }
+  .not-found { text-align: center; padding: 1.5rem 0; color: #555; font-size: 13px; }
+  .not-found strong { display: block; color: #888; margin-bottom: 4px; }
+  .loading { text-align: center; padding: 1.5rem 0; color: #555; font-size: 13px; font-family: 'Space Mono', monospace; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: #1a1a1a; border: 0.5px solid #2a2a2a; border-radius: 12px; overflow: hidden; max-width: 560px; margin: 2rem auto 0; }
+  .stat { background: #0e0e0e; padding: 1.25rem; text-align: center; }
+  .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 30px; letter-spacing: 2px; color: #c9a84c; }
+  .stat-lbl { font-size: 11px; color: #555; margin-top: 2px; }
+  footer { text-align: center; padding: 2rem; border-top: 0.5px solid #1a1a1a; margin-top: 3rem; font-size: 11px; color: #333; font-family: 'Space Mono', monospace; }
+  @media (max-width: 480px) {
+    nav { padding: 1rem 1.25rem; }
+    .hero { padding: 2.5rem 1.25rem 2rem; }
+    .track-card { padding: 1.25rem; }
+    .info-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html" style="text-decoration:none;color:#f0ede6;">VEGA<span>.</span></a>
+  <div class="nav-links">
+    <a href="services.html">Services</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-tag">Global sea freight network</div>
+  <div class="hero-title">YOUR CARGO.<br><span>DELIVERED.</span></div>
+  <div class="hero-sub">Premium sea freight from Dubai to Europe — tracked at every port of call.</div>
+
+  <div class="track-card">
+    <div class="track-label">Enter your tracking number</div>
+    <div class="track-row">
+      <input class="track-input" id="ti" placeholder="e.g. TRK-2847" onkeydown="if(event.key==='Enter')doTrack()" />
+      <button class="track-btn" onclick="doTrack()">TRACK</button>
+    </div>
+    <div class="result-wrap" id="rw"></div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-num">25+</div><div class="stat-lbl">Days Dubai–Vienna</div></div>
+    <div class="stat"><div class="stat-num">5</div><div class="stat-lbl">Port checkpoints</div></div>
+    <div class="stat"><div class="stat-num">99%</div><div class="stat-lbl">On-time rate</div></div>
+  </div>
+</div>
+
+<footer>© 2026 VEGA COURIER &nbsp;·&nbsp; Dubai to Europe, by sea.</footer>
+
+<script>
+  const API = 'https://rgtitrrzuicoyimjjbpn.supabase.co/rest/v1/Shipments';
+  const KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJndGl0cnJ6dWljb3lpbWpqYnBuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3MzU3OTQsImV4cCI6MjA5MDMxMTc5NH0.xQPk_EodzLqI4dGiTUOK4xWptpE0WqALspG6xmcL1xU';
+  const H = { 'apikey': KEY, 'Authorization': 'Bearer ' + KEY };
+
+  async function doTrack() {
+    const code = document.getElementById('ti').value.trim().toUpperCase();
+    const rw = document.getElementById('rw');
+    if (!code) return;
+    rw.className = 'result-wrap show';
+    rw.innerHTML = '<div class="loading">Searching...</div>';
+
+    const r = await fetch(API + `?tracking_code=eq.${code}&select=*`, { headers: H });
+    const arr = await r.json();
+    const s = arr[0];
+
+    if (!s) {
+      rw.innerHTML = '<div class="not-found"><strong>Tracking code not found</strong>Check your number and try again, or contact support.</div>';
+      return;
+    }
+
+    let timeline = [];
+    try { timeline = typeof s.Timeline === 'string' ? JSON.parse(s.Timeline) : (s.Timeline || []); } catch(e) {}
+
+    const tl = timeline.length > 0
+      ? timeline.map(t => `
+        <div class="t-item">
+          <div class="t-dot ${t.state}"></div>
+          <div class="t-status ${t.state === 'pending' ? 'muted' : ''}">${t.label}</div>
+          ${t.loc ? `<div class="t-loc">${t.loc}</div>` : ''}
+        </div>`).join('')
+      : '<div class="t-item"><div class="t-dot pending"></div><div class="t-status muted">No updates yet</div></div>';
+
+    const progress = parseInt(s.Progress) || 0;
+    const isPending = (s.status || '').toLowerCase().includes('pending');
+
+    rw.innerHTML = `
+      <div class="r-head">
+        <div class="r-code">${s.tracking_code}</div>
+        <div class="r-badge ${isPending ? 'pending' : ''}">${s.status}</div>
+      </div>
+      <div class="route-bar">
+        <div class="r-city">${s.origin}</div>
+        <div class="r-line"><div class="r-dot" style="left:${progress}%"></div></div>
+        <div class="r-city">${s.Destination}</div>
+      </div>
+      <div class="timeline">${tl}</div>
+      <div class="info-row">
+        <div><div class="lbl">Contents</div><div class="val">${s.Description || '—'}</div></div>
+        <div><div class="lbl">Weight</div><div class="val">${s.Weight || '—'}</div></div>
+        <div><div class="lbl">Service</div><div class="val">${s.Service || '—'}</div></div>
+        <div><div class="lbl">Route</div><div class="val">${s.origin} → ${s.Destination}</div></div>
+      </div>`;
+  }
+</script>
+</body>
+</html>

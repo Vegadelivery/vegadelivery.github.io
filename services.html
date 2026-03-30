@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Vega Courier — Services</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: #0e0e0e; color: #f0ede6; min-height: 100vh; }
+  nav { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 2.5rem; border-bottom: 0.5px solid #2a2a2a; }
+  .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 3px; text-decoration: none; color: #f0ede6; }
+  .nav-logo span { color: #c9a84c; }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a { font-size: 13px; color: #666; text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: #c9a84c; }
+
+  .page-hero { max-width: 860px; margin: 0 auto; padding: 4rem 2rem 3rem; text-align: center; }
+  .page-tag { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 3px; color: #c9a84c; text-transform: uppercase; margin-bottom: 1rem; }
+  .page-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(42px, 7vw, 72px); letter-spacing: 3px; line-height: 0.95; margin-bottom: 1rem; }
+  .page-title span { color: #c9a84c; }
+  .page-sub { font-size: 14px; color: #777; max-width: 480px; margin: 0 auto; line-height: 1.7; font-weight: 300; }
+
+  /* MAIN SERVICE */
+  .main-service { max-width: 900px; margin: 0 auto 4rem; padding: 0 2rem; }
+  .service-hero-card { background: #161616; border: 0.5px solid #2a2a2a; border-radius: 16px; padding: 3rem; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+  .sh-tag { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 3px; color: #c9a84c; margin-bottom: 1rem; }
+  .sh-title { font-family: 'Bebas Neue', sans-serif; font-size: 40px; letter-spacing: 2px; margin-bottom: 1rem; }
+  .sh-desc { font-size: 14px; color: #888; line-height: 1.8; font-weight: 300; margin-bottom: 1.5rem; }
+  .sh-badge { display: inline-block; background: #1a2a1a; border: 0.5px solid #2a4a2a; color: #5dca84; font-family: 'Space Mono', monospace; font-size: 10px; padding: 5px 12px; border-radius: 20px; letter-spacing: 1px; }
+  .sh-stats { display: flex; flex-direction: column; gap: 1rem; }
+  .sh-stat { background: #0e0e0e; border: 0.5px solid #2a2a2a; border-radius: 10px; padding: 1.25rem 1.5rem; }
+  .sh-stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 36px; letter-spacing: 2px; color: #c9a84c; }
+  .sh-stat-lbl { font-size: 12px; color: #555; margin-top: 2px; }
+
+  /* ROUTE */
+  .route-section { max-width: 900px; margin: 0 auto 4rem; padding: 0 2rem; }
+  .section-label { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 3px; color: #555; text-transform: uppercase; margin-bottom: 1.5rem; }
+  .route-card { background: #161616; border: 0.5px solid #2a2a2a; border-radius: 12px; padding: 2rem; }
+  .route-title { font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 2px; margin-bottom: 0.5rem; }
+  .route-sub { font-size: 13px; color: #666; margin-bottom: 2rem; }
+  .route-stops { display: flex; align-items: flex-start; gap: 0; overflow-x: auto; padding-bottom: 0.5rem; }
+  .stop { display: flex; flex-direction: column; align-items: center; min-width: 110px; }
+  .stop-dot { width: 12px; height: 12px; border-radius: 50%; background: #c9a84c; flex-shrink: 0; margin-bottom: 0.5rem; }
+  .stop-dot.mid { background: #2a2a2a; border: 1px solid #444; }
+  .stop-name { font-size: 11px; font-weight: 500; text-align: center; margin-bottom: 2px; }
+  .stop-country { font-size: 10px; color: #555; font-family: 'Space Mono', monospace; text-align: center; }
+  .stop-line { flex: 1; height: 1px; background: #2a2a2a; align-self: center; min-width: 30px; margin-top: -18px; }
+
+  /* FEATURES */
+  .features { max-width: 900px; margin: 0 auto 4rem; padding: 0 2rem; }
+  .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .feat { background: #161616; border: 0.5px solid #2a2a2a; border-radius: 12px; padding: 1.5rem; }
+  .feat-icon { font-size: 24px; margin-bottom: 0.75rem; }
+  .feat-title { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 1px; margin-bottom: 0.5rem; }
+  .feat-desc { font-size: 13px; color: #666; line-height: 1.6; font-weight: 300; }
+
+  /* CTA */
+  .cta { max-width: 900px; margin: 0 auto 4rem; padding: 0 2rem; }
+  .cta-card { background: #161616; border: 0.5px solid #2a2a2a; border-radius: 12px; padding: 2.5rem; display: flex; justify-content: space-between; align-items: center; gap: 2rem; flex-wrap: wrap; }
+  .cta-text h3 { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 2px; margin-bottom: 0.5rem; }
+  .cta-text p { font-size: 13px; color: #666; }
+  .cta-btn { background: #c9a84c; color: #0e0e0e; border: none; border-radius: 8px; font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 2px; padding: 12px 28px; cursor: pointer; text-decoration: none; white-space: nowrap; }
+  .cta-btn:hover { background: #d4b055; }
+
+  footer { text-align: center; padding: 2rem; border-top: 0.5px solid #1a1a1a; font-size: 11px; color: #333; font-family: 'Space Mono', monospace; }
+
+  @media (max-width: 700px) {
+    nav { padding: 1rem 1.25rem; }
+    .service-hero-card { grid-template-columns: 1fr; gap: 2rem; }
+    .features-grid { grid-template-columns: 1fr; }
+    .cta-card { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">VEGA<span>.</span></a>
+  <div class="nav-links">
+    <a href="services.html" class="active">Services</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="page-tag">What we do</div>
+  <div class="page-title">BUILT FOR <span>SEA FREIGHT.</span></div>
+  <p class="page-sub">One route. Done properly. Dubai to Europe by sea — with full visibility from port to door.</p>
+</div>
+
+<!-- MAIN SERVICE -->
+<div class="main-service">
+  <div class="service-hero-card">
+    <div>
+      <div class="sh-tag">CORE SERVICE</div>
+      <div class="sh-title">FULL CONTAINER LOAD (FCL)</div>
+      <p class="sh-desc">Your cargo gets its own container. Loaded in Dubai, sealed, and delivered to your European destination without sharing space with anyone else. Maximum security, predictable transit times, competitive pricing for large volumes.</p>
+      <span class="sh-badge">✦ CURRENTLY OPERATING</span>
+    </div>
+    <div class="sh-stats">
+      <div class="sh-stat">
+        <div class="sh-stat-num">22–28</div>
+        <div class="sh-stat-lbl">Days average transit, Dubai to Rotterdam</div>
+      </div>
+      <div class="sh-stat">
+        <div class="sh-stat-num">5</div>
+        <div class="sh-stat-lbl">Port checkpoints tracked in real time</div>
+      </div>
+      <div class="sh-stat">
+        <div class="sh-stat-num">99%</div>
+        <div class="sh-stat-lbl">On-time delivery rate</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ROUTE -->
+<div class="route-section">
+  <div class="section-label">The Route</div>
+  <div class="route-card">
+    <div class="route-title">DUBAI → ROTTERDAM</div>
+    <p class="route-sub">Every shipment follows the same verified sea route, tracked at each port of call.</p>
+    <div class="route-stops">
+      <div class="stop">
+        <div class="stop-dot"></div>
+        <div class="stop-name">Jebel Ali</div>
+        <div class="stop-country">UAE</div>
+      </div>
+      <div class="stop-line"></div>
+      <div class="stop">
+        <div class="stop-dot mid"></div>
+        <div class="stop-name">Suez Canal</div>
+        <div class="stop-country">Egypt</div>
+      </div>
+      <div class="stop-line"></div>
+      <div class="stop">
+        <div class="stop-dot mid"></div>
+        <div class="stop-name">Port Said</div>
+        <div class="stop-country">Egypt</div>
+      </div>
+      <div class="stop-line"></div>
+      <div class="stop">
+        <div class="stop-dot mid"></div>
+        <div class="stop-name">Algeciras</div>
+        <div class="stop-country">Spain</div>
+      </div>
+      <div class="stop-line"></div>
+      <div class="stop">
+        <div class="stop-dot mid"></div>
+        <div class="stop-name">Le Havre</div>
+        <div class="stop-country">France</div>
+      </div>
+      <div class="stop-line"></div>
+      <div class="stop">
+        <div class="stop-dot mid"></div>
+        <div class="stop-name">Antwerp</div>
+        <div class="stop-country">Belgium</div>
+      </div>
+      <div class="stop-line"></div>
+      <div class="stop">
+        <div class="stop-dot"></div>
+        <div class="stop-name">Rotterdam</div>
+        <div class="stop-country">Netherlands</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<div class="features">
+  <div class="section-label">What's included</div>
+  <div class="features-grid">
+    <div class="feat">
+      <div class="feat-icon">📦</div>
+      <div class="feat-title">Port-to-door</div>
+      <p class="feat-desc">We handle pickup from Dubai port and arrange final delivery to your address in Austria.</p>
+    </div>
+    <div class="feat">
+      <div class="feat-icon">📡</div>
+      <div class="feat-title">Live tracking</div>
+      <p class="feat-desc">Your client gets a tracking code. They check their shipment status anytime, at every checkpoint.</p>
+    </div>
+    <div class="feat">
+      <div class="feat-icon">🛃</div>
+      <div class="feat-title">Customs support</div>
+      <p class="feat-desc">We assist with customs documentation for both UAE export and EU import clearance.</p>
+    </div>
+    <div class="feat">
+      <div class="feat-icon">🔒</div>
+      <div class="feat-title">Sealed container</div>
+      <p class="feat-desc">FCL means your container is yours alone. Sealed in Dubai, opened at destination.</p>
+    </div>
+    <div class="feat">
+      <div class="feat-icon">📋</div>
+      <div class="feat-title">Full documentation</div>
+      <p class="feat-desc">Bill of lading, packing list, certificate of origin — all handled and provided.</p>
+    </div>
+    <div class="feat">
+      <div class="feat-icon">📞</div>
+      <div class="feat-title">Direct contact</div>
+      <p class="feat-desc">No call centres. You deal with us directly at every step of the shipment.</p>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta">
+  <div class="cta-card">
+    <div class="cta-text">
+      <h3>READY TO SHIP?</h3>
+      <p>Get in touch and we'll handle the rest.</p>
+    </div>
+    <a class="cta-btn" href="contact.html">CONTACT US</a>
+  </div>
+</div>
+
+<footer>© 2026 VEGA COURIER &nbsp;·&nbsp; Dubai to Europe, by sea.</footer>
+</body>
+</html>
